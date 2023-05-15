@@ -1,0 +1,23 @@
+// Класс для представления математической функции
+class MathFunction(val func: Double => Double) {
+  def compose(other: MathFunction): MathFunction = {
+    new MathFunction(x => func(other.func(x)))
+  }
+
+  def apply(x: Double): Double = {
+    func(x)
+  }
+}
+
+// Создаем несколько математических функций
+val square = new MathFunction(x => x * x)
+val cube = new MathFunction(x => x * x * x)
+val increment = new MathFunction(x => x + 1)
+
+// Композиция функций
+val composedFunc = square.compose(cube).compose(increment)
+
+// Вычисляем результат для заданного значения
+val result = composedFunc(2.0)
+
+println(result) // Выводит: 513.0
